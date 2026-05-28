@@ -40,10 +40,10 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-rose-200 h-screen max-w-full flex flex-col align-center items-center">
+    <main className="bg-rose-200 h-screen max-w-full flex flex-col align-center items-center overflow-none">
       <div
         className={cn(
-          `absolute flex flex-1 z-100 text-center`,
+          `absolute flex flex-1 z-100 text-center overflow-none`,
           openedEnvelope
             ? " transition-all duration-600 -top-100 delay-400"
             : "top-75 md:top-80",
@@ -137,10 +137,10 @@ export default function Home() {
         width={200}
         className={cn(
           `
-          absolute bottom-0 `,
+          absolute `,
           openedEnvelope
-            ? "transition-all duration-600 delay-400 right-5 md:right-40 lg:right-75"
-            : "-right-100",
+            ? "block transition-all duration-600 delay-400 bottom-0 right-5 md:right-40 lg:right-75"
+            : "right-500",
         )}
       />
 
