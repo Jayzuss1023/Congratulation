@@ -137,7 +137,7 @@ export default function Home() {
         width={200}
         className={cn(
           `
-          absolute `,
+          absolute z-100`,
           openedEnvelope
             ? "block transition-all duration-600 delay-400 bottom-0 right-5 md:right-40 lg:right-75"
             : "right-500",
@@ -147,7 +147,7 @@ export default function Home() {
       <div
         className={cn(
           `
-          absolute bottom-25 md:bottom-15 `,
+          absolute bottom-25 md:bottom-15 z-100`,
           openedEnvelope
             ? "transition-all duration-600 delay-400 left-5 md:left-40 lg:left-75 animate-bounce"
             : "-left-100",
