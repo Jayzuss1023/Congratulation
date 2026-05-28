@@ -1,65 +1,187 @@
+"use client";
 import Image from "next/image";
+import Brave from "../brave.gif";
+import Congrats from "../congrats.gif";
+import HappyDance from "../happydance.gif";
+import Pedal from "../pedal.webp";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import "./globals.css";
+
+type RainType = {
+  src: string;
+  left: string;
+  top: string;
+  duration: string;
+  delay: string;
+  width: string;
+  rotate: number;
+};
 
 export default function Home() {
+  const [openedEnvelope, setOpenEnvelope] = useState(false);
+  const [rain, setRain] = useState<RainType[]>([]);
+  const [drop, setDrop] = useState(false);
+  useEffect(() => {
+    const duplicates = new Array(10).fill(Pedal);
+
+    const rainDrop = duplicates.map((duplicate) => ({
+      src: duplicate.src,
+      left: Math.random() * 100 + "%",
+      top: 0 + "%",
+      duration: Math.random() * 5 + 2 + "s",
+      delay: Math.random() * 5 + "s",
+      width: Math.random() * 2 + 2 + "px",
+      rotate: Math.random() * 180 + Math.random(),
+    }));
+
+    setRain(rainDrop);
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="bg-rose-200 h-screen max-w-full flex flex-col align-center items-center">
+      <div
+        className={cn(
+          `absolute flex flex-1 z-100 text-center`,
+          openedEnvelope
+            ? " transition-all duration-600 -top-100 delay-400"
+            : "top-75 md:top-80",
+        )}
+      >
+        <p className="text-4xl animate-bounce text-primary-foreground italic font-bold">
+          You've got mail!
+        </p>
+      </div>
+      <Image
+        src={Congrats}
+        alt="Background"
+        height={5}
+        width={300}
+        className={cn(
+          `absolute flex flex-1 z-100 text-center`,
+          openedEnvelope
+            ? " transition-all duration-600 top-3 delay-400"
+            : "-top-100",
+        )}
+      />
+      {/* Card */}
+      <div
+        className={cn(
+          "flex flex-col flex-1 relative min-w-full min-h-1/2 w-20 bg-green-100 border outline-2 outline-orange-100 rounded-lg justify-center items-center m-auto overflow-hidden",
+        )}
+      >
+        <div
+          className={cn(
+            "relative flex-1 justify-center items-center flex w-full h-1/2 bg-orange-200 border border-dashed outline-1 outline-orange-700 z-10",
+            openedEnvelope
+              ? "transform -translate-y-180 transition-all duration-700 delay-200 bottom-100"
+              : "bottom-0 overflow-visible",
+          )}
+        >
+          <Button
+            variant="outline"
+            onClick={() => setOpenEnvelope(!openedEnvelope)}
+            className={cn(
+              `absolute -bottom-5 h-10 w-20 bg-yellow-900 group-hover:bg-yellow-800 hover:bg-yellow-800 duration-100 transition-all text-sm text-muted-foreground`,
+            )}
           >
+            <span className="text-white hover:text-white duration-100">
+              Open
+            </span>
+          </Button>
+        </div>
+
+        <div
+          className={cn(
+            `absolute flex flex-1 min-h-1/2 z-100 bg-rose-100 `,
+            openedEnvelope
+              ? " transition-all duration-600 top-50 delay-400"
+              : "-top-200",
+          )}
+        >
+          <div className="text-muted-foreground font-bold text-lg p-5 h-50 m-auto">
+            Congrats on another semester!! Doing a great job at being one tough
+            cookie 🍪 Keep at it and don't go cuckoo just yet lol. Don't lose
+            heart, keep Jesus at the center of it all, He'll bless all your
+            efforts, ya know? Good luck to you on your next semester. You got
+            this 🥳
+          </div>
+        </div>
+        <div className="relative flex flex-1 h-1/2 w-full bg-red-50 justify-center align-center">
+          <div className="bg-blue-50 flex-1">
+            <div />
+          </div>
+          <div className="relative bg-green-50 flex-1"></div>
+        </div>
+      </div>
+
+      <Image
+        src={Brave}
+        alt="Background"
+        height={200}
+        width={200}
+        className={cn(
+          `
+          absolute bottom-0 `,
+          openedEnvelope
+            ? "transition-all duration-600 -left-100"
+            : "left-5 lg:left-30",
+        )}
+      />
+
+      <Image
+        src={HappyDance}
+        alt="Background"
+        height={200}
+        width={200}
+        className={cn(
+          `
+          absolute bottom-0 `,
+          openedEnvelope
+            ? "transition-all duration-600 delay-400 right-5 md:right-40 lg:right-75"
+            : "-right-100",
+        )}
+      />
+
+      <div
+        className={cn(
+          `
+          absolute bottom-25 md:bottom-15 `,
+          openedEnvelope
+            ? "transition-all duration-600 delay-400 left-5 md:left-40 lg:left-75 animate-bounce"
+            : "-left-100",
+        )}
+      >
+        <p className="text-3xl md:text-4xl font-bold -rotate-20 text-muted-foreground">
+          Congratulations
+        </p>
+        <p className="text-3xl md:text-4xl font-bold -rotate-20 text-muted-foreground">
+          Madison!
+        </p>
+      </div>
+
+      {openedEnvelope && (
+        <div className="rain-container ">
+          {rain.map((r, i) => (
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src={r.src}
+              key={i + "hello"}
+              width={10}
+              height={10}
+              alt="property"
+              className="drop"
+              style={{
+                left: r.left,
+                animationDelay: r.delay,
+                animationDuration: r.duration,
+
+                transform: `rotate(${r.rotate}deg)`,
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
-    </div>
+      )}
+    </main>
   );
 }
