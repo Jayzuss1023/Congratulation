@@ -40,7 +40,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-rose-200 h-screen max-w-full flex flex-col align-center items-center overflow-none">
+    <main className="bg-rose-200 min-h-screen max-w-full flex flex-col align-center items-center overflow-none">
       <div
         className={cn(
           `absolute flex flex-1 z-100 text-center overflow-none`,
